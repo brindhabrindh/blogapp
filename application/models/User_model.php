@@ -5,12 +5,14 @@ class User_model extends CI_Model {
         parent::__construct();
     }
 
-    public function get_posts() {
-        $this->db->order_by('created_at', 'DESC');
-        return $this->db->get('posts')->result();
+    public function register($data) {
+        return $this->db->insert('users', $data);
     }
 
-    public function get_post($id) {
-        return $this->db->get_where('posts', array('id' => $id))->row();
+    public function login($email, $password) {
+        $this->db->where('email', $email);
+        $this->db->where('password', $password);
+        $query = $this->db->get('users');
+        return $query->row_array();
     }
 }
